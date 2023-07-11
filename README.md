@@ -5,6 +5,8 @@ The Ghost-Ruby-i18n project is based on the official [Ruby](https://github.com/T
 * English
 * Simplified Chinese
 
+### Demo: [乐心的博客](https://blog.quzone.cn)
+
 ## How to use
 
 * Download the latest version of the `ruby.zip` file from the GitHub release, then go to your Ghost blog's backend, navigate to `Settings -> Design -> Change theme -> Upload theme`, and upload the `ruby.zip` file.
@@ -18,6 +20,8 @@ Ghost-Ruby-i18n 项目是基于官方的 [Ruby](https://github.com/TryGhost/Ruby
 
 * 英文
 * 简体中文
+
+### 效果预览: [乐心的博客](https://blog.quzone.cn)
 
 ## 使用方式
 

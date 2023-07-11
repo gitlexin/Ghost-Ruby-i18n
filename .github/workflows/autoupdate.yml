@@ -1,0 +1,31 @@
+name: autoupdate
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup bot
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions"
+          git config --local pull.rebase false
+      - name: Add upstream repo
+        run: git remote add upstream https://github.com/TryGhost/Ruby.git
+      - name: Checkout master
+        run: git checkout master
+      - name: Merge upstream
+        run: git pull upstream main --tags
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true

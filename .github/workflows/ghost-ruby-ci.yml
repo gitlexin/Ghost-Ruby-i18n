@@ -11,17 +11,36 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: "18.x"
         cache: 'npm'
     - run: npm ci
-    - run: npm test
     - run: npm zip
+    - name: Upload zip artifact
+      uses: actions/upload-artifact@v3
+      with:
+       name: ruby.zip
+       path: dist/ruby.zip
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+       tag_name: ${{ github.ref }}
+       release_name: Release ${{ github.ref }}
+       draft: false
+       prerelease: false
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+       upload_url: ${{ steps.create_release.outputs.upload_url }}
+       asset_path: dist/ruby.zip
+       asset_name: ruby.zip
+       asset_content_type: application/zip

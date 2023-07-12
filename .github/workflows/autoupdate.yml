@@ -19,8 +19,8 @@ jobs:
           git config --local pull.rebase false
       - name: Add upstream repo
         run: git remote add upstream https://github.com/TryGhost/Ruby.git
-      - name: Checkout master
-        run: git checkout master
+      - name: Checkout main
+        run: git checkout main
       - name: Merge upstream
         run: git pull upstream main --tags
       - name: Push changes
